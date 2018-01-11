@@ -26,7 +26,7 @@ app.get("/TrainRoute", function (req, res) {
 });
 //GET Endpoint
 
-app.post("/api", function (req, res) {
+app.post("/RailwayAPI", function (req, res) {
     console.log(JSON.stringify(req.body.result.action));
 
     console.log('req.body.originalRequest.source');
