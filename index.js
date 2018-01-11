@@ -6,15 +6,23 @@ var request = require('request');
 app = express();
 //Create express object
 
-var port = 7001;
+var port = env.process.port || 7001;
 //Assign port
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //Configuring express app behaviour
 
-app.get("/api", function (req, res) {
-    res.send("Train MicroService works");
+app.get("/PNRStatus", function (req, res) {
+    res.send("PNRStatus MicroService works");
+});
+
+app.get("/FareDetails", function (req, res) {
+    res.send("FareDetails MicroService works");
+});
+
+app.get("/TrainRoute", function (req, res) {
+    res.send("TrainRoute MicroService works");
 });
 //GET Endpoint
 
