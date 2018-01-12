@@ -21,6 +21,8 @@ app.get("/PNRStatus", function (req, res) {
 app.post("/RailwayAPI", function (req, res) {
     console.log(JSON.stringify(req.body));
 
+    console.log('Inside Railway API');
+
     var header = {
         'Cache-Control': 'no-cache',
         Accept: 'application/json',
