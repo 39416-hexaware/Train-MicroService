@@ -4,8 +4,7 @@
   "description": "Train Microservice",
   "main": "index.js",
   "scripts": {
-    "start": "pm2  start index.js",
-    "stop": "pm2 stop all"
+    "start": "node index.js"
   },
   "author": "Mubashshir Mohammed A",
   "license": "ISC",
