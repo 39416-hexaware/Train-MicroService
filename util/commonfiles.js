@@ -12,10 +12,25 @@ module.exports.headerTemplate = function () {
 
 var APIList = {
     'TrainIntent.CancelIntent': (date) => {
-        console.log('Inside APIList');
-        api = 'https://api.railwayapi.com/v2/cancelled/date/'+ dateFormatter(date) +'/apikey/' + RailAPIKEY ; //Date Format: <dd-mm-yyyy>
+        console.log('Inside CancelIntent');
+        api = 'https://api.railwayapi.com/v2/cancelled/date/'+ dateFormatter(date) +'/apikey/' + RailAPIKEY; //Date Format: <dd-mm-yyyy>
         return api;
-    }    
+    },
+    'TrainIntent.PNRStatus': (pnrnumber) => {
+        console.log('Inside PNRStatus');
+        api = 'https://api.railwayapi.com/v2/pnr-status/pnr/'+ pnrnumber +'/apikey/' + RailAPIKEY;
+        return api;
+    },
+    'TrainIntent.TrainRoute': (trainnumber) => {
+        console.log('Inside TrainRoute');
+        api = 'https://api.railwayapi.com/v2/route/train/'+ trainnumber +'/apikey/' + RailAPIKEY;
+        return api;
+    },
+    'TrainIntent.GetStationCode': (stationname) => {
+        console.log('Inside TrainRoute');
+        api = 'https://api.railwayapi.com/v2/name-to-code/station/'+ stationname +'/apikey/' + RailAPIKEY;
+        return api;
+    }
 };
 
 var dateFormatter = function (strdate) {

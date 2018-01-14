@@ -34,6 +34,21 @@ app.post("/RailwayAPI", function (req, res) {
         url = commonFiles.APIList[intentFrom](cancelledDate);
         console.log(url);
       }
+      else if (intentFrom === 'TrainIntent.PNRStatus') {
+        let pnrNumber = req.body.PNRNumber;
+        url = commonFiles.APIList[intentFrom](pnrNumber);
+        console.log(url);
+      }
+      else if (intentFrom === 'TrainIntent.TrainRoute') {
+        let trainNumber = req.body.TrainNumber;
+        url = commonFiles.APIList[intentFrom](trainNumber);
+        console.log(url);
+      }
+      else if (intentFrom === 'TrainIntent.GetStationCode') {
+        let stationName = req.body.StationName;
+        url = commonFiles.APIList[intentFrom](stationName);
+        console.log(url);
+      }
 
       var options = {
         url: url,
