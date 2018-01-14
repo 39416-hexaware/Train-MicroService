@@ -26,31 +26,36 @@ app.post("/RailwayAPI", function (req, res) {
   console.log('Inside Railway API');
   async.parallel([
     function (firstfn) {
+      let intentFrom = 'TrainIntent.CancelIntent';
+      let cancelledDate = '13-01-2018';
+      let url = commonFiles.APIList[intentFrom](cancelledDate);
+      console.log(url);
 
+      var options = {
+        url: url,
+        method: 'GET',
+        header: commonFiles.headerTemplate(),
+        body: '',
+        json: true
+      };
+
+      requestAPI(options, function (error, response, body) {
+        if (error) {
+          console.dir(error);
+          return
+        }
+        else {
+          console.log('status code:' + response.statusCode);
+
+          console.log('Inside data process');
+          firstfn(false, body);
+        }
+      });
     }],
     function (err, result) {
-
+      console.log('Inside Final Response Send of Railway API');
+      res.json(result);
     });
-  var options = {
-    url: url,
-    method: 'GET',
-    header: commonFiles.headerTemplate(),
-    body: '',
-    json: true
-  };
-
-  requestAPI(options, function (error, response, body) {
-    if (error) {
-      console.dir(error);
-      return
-    }
-    else {
-      console.log('status code:' + response.statusCode);
-
-      console.log('Inside data process');
-      firstfn(false, body);
-    }
-  });
 });
 //POST Call Endpoint
 
