@@ -26,10 +26,13 @@ app.post("/RailwayAPI", function (req, res) {
   console.log('Inside Railway API');
   async.parallel([
     function (firstfn) {
-      let intentFrom = req.body.IntentName;
-      let cancelledDate = req.body.CancelledDate;
-      let url = commonFiles.APIList[intentFrom](cancelledDate);
-      console.log(url);
+      let intentFrom = req.body.IntentName;      
+
+      if(intentFrom === 'TrainIntent.CancelIntent') {
+        let cancelledDate = req.body.CancelledDate;
+        let url = commonFiles.APIList[intentFrom](cancelledDate);
+        console.log(url);
+      }            
 
       var options = {
         url: url,
