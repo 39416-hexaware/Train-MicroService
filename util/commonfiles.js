@@ -43,7 +43,7 @@ var dateFormatter = function (strdate) {
 
 var generateTicket = function (prefix) {
     var rn = Math.floor(Math.random()*90000) + 10000;
-    var result = prefix.toUpperCase().substring(0,3) + rn;
+    var result = prefix.toUpperCase().substring(0,4) + rn;
     console.log(result);
     return result;
 }

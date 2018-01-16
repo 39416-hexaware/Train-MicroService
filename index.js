@@ -8,7 +8,7 @@ const commonFiles = require('./util/commonfiles');
 app = express();
 //Create express object
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 7001;
 //Assign port
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -24,8 +24,7 @@ app.post("/RailwayAPI", function (req, res) {
   console.log(JSON.stringify(req.body));
 
   if(req.body.IntentName == 'TrainIntent.BookTicket') {
-    let prefix = 'TICKET';
-    let cancelledDate = req.body.CancelledDate;
+    let prefix = 'RAILWAY';
     let boardingPoint = req.body.BoardingPoint;
     let destination = req.body.Destination;
     let travelDate = req.body.DateOfTravel;
