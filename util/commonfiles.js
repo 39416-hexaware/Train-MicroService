@@ -41,4 +41,12 @@ var dateFormatter = function (strdate) {
     return finalDate;
 }
 
+var generateTicket = function (prefix) {
+    var rn = Math.floor(Math.random()*90000) + 10000;
+    var result = prefix.toUpperCase().substring(0,3) + rn;
+    console.log(result);
+    return result;
+}
+
 module.exports.APIList = APIList;
+module.exports.generateTicket = generateTicket;

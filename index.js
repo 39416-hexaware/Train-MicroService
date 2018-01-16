@@ -23,58 +23,73 @@ app.get("/PNRStatus", function (req, res) {
 app.post("/RailwayAPI", function (req, res) {
   console.log(JSON.stringify(req.body));
 
-  console.log('Inside Railway API');
-  async.parallel([
-    function (firstfn) {
-      let intentFrom = req.body.IntentName;
-      var url = '';
+  if(req.body.IntentName == 'TrainIntent.BookTicket') {
+    let prefix = 'TICKET';
+    let cancelledDate = req.body.CancelledDate;
+    let boardingPoint = req.body.BoardingPoint;
+    let destination = req.body.Destination;
+    let travelDate = req.body.DateOfTravel;
+    let noOfTickets = req.body.Tickets;
+    let ticketno = commonFiles.generateTicket(prefix);
 
-      if (intentFrom === 'TrainIntent.CancelIntent') {
-        let cancelledDate = req.body.CancelledDate;
-        url = commonFiles.APIList[intentFrom](cancelledDate);
-        console.log(url);
-      }
-      else if (intentFrom === 'TrainIntent.PNRStatus') {
-        let pnrNumber = req.body.PNRNumber;
-        url = commonFiles.APIList[intentFrom](pnrNumber);
-        console.log(url);
-      }
-      else if (intentFrom === 'TrainIntent.TrainRoute') {
-        let trainNumber = req.body.TrainNumber;
-        url = commonFiles.APIList[intentFrom](trainNumber);
-        console.log(url);
-      }
-      else if (intentFrom === 'TrainIntent.GetStationCode') {
-        let stationName = req.body.StationName;
-        url = commonFiles.APIList[intentFrom](stationName);
-        console.log(url);
-      }
+    console.log('Train Book Ticket');
 
-      var options = {
-        url: url,
-        method: 'GET',
-        header: commonFiles.headerTemplate(),
-        body: '',
-        json: true
-      };
-
-      requestAPI(options, function (error, response, body) {
-        if (error) {
-          console.dir(error);
-          return
+    res.json(ticketno);
+  }
+  else {
+    console.log('Inside Railway API');
+    async.parallel([
+      function (firstfn) {
+        let intentFrom = req.body.IntentName;
+        var url = '';
+  
+        if (intentFrom === 'TrainIntent.CancelIntent') {
+          let cancelledDate = req.body.CancelledDate;
+          url = commonFiles.APIList[intentFrom](cancelledDate);
+          console.log(url);
         }
-        else {
-          console.log('status code:' + response.statusCode);
-
-          console.log('Inside data process');
-          firstfn(false, body);
+        else if (intentFrom === 'TrainIntent.PNRStatus') {
+          let pnrNumber = req.body.PNRNumber;
+          url = commonFiles.APIList[intentFrom](pnrNumber);
+          console.log(url);
         }
+        else if (intentFrom === 'TrainIntent.TrainRoute') {
+          let trainNumber = req.body.TrainNumber;
+          url = commonFiles.APIList[intentFrom](trainNumber);
+          console.log(url);
+        }
+        else if (intentFrom === 'TrainIntent.GetStationCode') {
+          let stationName = req.body.StationName;
+          url = commonFiles.APIList[intentFrom](stationName);
+          console.log(url);
+        }
+  
+        var options = {
+          url: url,
+          method: 'GET',
+          header: commonFiles.headerTemplate(),
+          body: '',
+          json: true
+        };
+  
+        requestAPI(options, function (error, response, body) {
+          if (error) {
+            console.dir(error);
+            return
+          }
+          else {
+            console.log('status code:' + response.statusCode);
+  
+            console.log('Inside data process');
+            firstfn(false, body);
+          }
+        });
+      }],
+      function (err, result) {
+        console.log('Inside Final Response Send of Railway API');
+        res.json(result);
       });
-    }],
-    function (err, result) {
-      console.log('Inside Final Response Send of Railway API');
-      res.json(result);
-    });
+  }  
 });
 //POST Call Endpoint
 
