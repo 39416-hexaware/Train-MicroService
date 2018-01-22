@@ -4,7 +4,7 @@
   "description": "Train Microservice",
   "main": "index.js",
   "scripts": {
-    "start": "pm2  start index.js",
+    "start": "pm2  start index.js --name TrainMicroService",
     "stop": "pm2 stop TrainMicroService"
 
   },
