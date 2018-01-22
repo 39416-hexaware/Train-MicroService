@@ -23,7 +23,7 @@ app.get("/PNRStatus", function (req, res) {
 app.post("/RailwayAPI", function (req, res) {
   console.log(JSON.stringify(req.body));
 
-  if(req.body.IntentName == 'TrainIntent.BookTicket') {
+  if (req.body.IntentName == 'TrainIntent.BookTicket') {
     let prefix = 'RAILWAY';
     let boardingPoint = req.body.BoardingPoint;
     let destination = req.body.Destination;
@@ -41,7 +41,7 @@ app.post("/RailwayAPI", function (req, res) {
       function (firstfn) {
         let intentFrom = req.body.IntentName;
         var url = '';
-  
+
         if (intentFrom === 'TrainIntent.CancelIntent') {
           let cancelledDate = req.body.CancelledDate;
           url = commonFiles.APIList[intentFrom](cancelledDate);
@@ -62,7 +62,7 @@ app.post("/RailwayAPI", function (req, res) {
           url = commonFiles.APIList[intentFrom](stationName);
           console.log(url);
         }
-  
+
         var options = {
           url: url,
           method: 'GET',
@@ -70,7 +70,7 @@ app.post("/RailwayAPI", function (req, res) {
           body: '',
           json: true
         };
-  
+
         requestAPI(options, function (error, response, body) {
           if (error) {
             console.dir(error);
@@ -78,9 +78,14 @@ app.post("/RailwayAPI", function (req, res) {
           }
           else {
             console.log('status code:' + response.statusCode);
-  
+
             console.log('Inside data process');
-            firstfn(false, body);
+            if (response.statusCode == '200') {
+              firstfn(false, body);
+            }
+            else {
+              res.json({ "error": response.statusCode });
+            }
           }
         });
       }],
@@ -88,7 +93,7 @@ app.post("/RailwayAPI", function (req, res) {
         console.log('Inside Final Response Send of Railway API');
         res.json(result);
       });
-  }  
+  }
 });
 //POST Call Endpoint
 
